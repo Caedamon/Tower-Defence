@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://bynac0hhi7qsd"]
+
+[ext_resource type="PackedScene" uid="uid://dkem0swlatq2p" path="res://assets/buildings/catapult.gltf" id="1_jg0e8"]
+
+[node name="catapult2" instance=ExtResource("1_jg0e8")]

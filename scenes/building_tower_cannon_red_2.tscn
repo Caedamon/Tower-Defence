@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpc3r38b5nn03"]
+
+[ext_resource type="PackedScene" uid="uid://dbkmcp36cmct3" path="res://assets/buildings/building_tower_cannon_red.gltf" id="1_i1g08"]
+
+[node name="building_tower_cannon_red2" instance=ExtResource("1_i1g08")]
