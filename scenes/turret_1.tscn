@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bw7qjsw1xnlvj"]
 
-[ext_resource type="Script" path="res://scripts/turret_1.gd" id="1_3ec1f"]
+[ext_resource type="Script" uid="uid://cwxqbigutbxve" path="res://scripts/turret_1.gd" id="1_3ec1f"]
 [ext_resource type="PackedScene" uid="uid://bpc3r38b5nn03" path="res://scenes/building_tower_cannon_red_2.tscn" id="2_yuu3w"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_21f5h"]

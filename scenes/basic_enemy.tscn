@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://bglhgxtuyt3il"]
 
-[ext_resource type="Script" path="res://scripts/basic_enemy.gd" id="1_dge3r"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="2_ss23o"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="3_0adrf"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="4_rtx7w"]
-[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_sns3x"]
+[ext_resource type="Script" uid="uid://0fd45svuoep0" path="res://scripts/basic_enemy.gd" id="1_dge3r"]
+[ext_resource type="Script" uid="uid://1onom427w75x" path="res://addons/godot_state_charts/state_chart.gd" id="2_ss23o"]
+[ext_resource type="Script" uid="uid://bh5mwh2bdpykw" path="res://addons/godot_state_charts/compound_state.gd" id="3_0adrf"]
+[ext_resource type="Script" uid="uid://dh1uwqry00tmb" path="res://addons/godot_state_charts/atomic_state.gd" id="4_rtx7w"]
+[ext_resource type="Script" uid="uid://dkafc37182inw" path="res://addons/godot_state_charts/transition.gd" id="5_sns3x"]
 [ext_resource type="PackedScene" uid="uid://b3ig71e2qckvf" path="res://scenes/knight.tscn" id="6_8j1jj"]
 
 [sub_resource type="Animation" id="Animation_75jcs"]
@@ -56,9 +56,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_d8fh7"]
 _data = {
-"RESET": SubResource("Animation_75jcs"),
-"despawn": SubResource("Animation_5f4l8"),
-"spawn": SubResource("Animation_qllg7")
+&"RESET": SubResource("Animation_75jcs"),
+&"despawn": SubResource("Animation_5f4l8"),
+&"spawn": SubResource("Animation_qllg7")
 }
 
 [node name="BasicEnemy" type="Node3D"]
