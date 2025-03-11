@@ -4,13 +4,13 @@ extends Node3D
 var enemies_in_range:Array[Node3D]
 
 # Called when an enemy enters the patrol zone
-func _on_patrol_zone_area_entered(area):
+func _on_patrol_zone_area_entered(area: Area3D) -> void:
 	print(area, " entered")
 	enemies_in_range.append(area.get_node("../../.."))  # Add the enemy to the list
 	print(enemies_in_range.size())
 
 # Called when an enemy exits the patrol zone
-func _on_patrol_zone_area_exited(area):
+func _on_patrol_zone_area_exited(area: Area3D) -> void:
 	print(area, " exited")
 	enemies_in_range.erase(area.get_node("../../.."))  # Remove the enemy from the list
 	print(enemies_in_range.size())

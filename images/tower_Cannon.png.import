@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dqbcw8km3tyjj"
-valid=false
+uid="uid://bvp8wfy4lgoc8"
+path="res://.godot/imported/tower_Cannon.png-44ba69ca86cf42b2b929d781f9b0b692.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
-source_file="res://images/tower_Cannon.jpg"
+source_file="res://images/tower_Cannon.png"
+dest_files=["res://.godot/imported/tower_Cannon.png-44ba69ca86cf42b2b929d781f9b0b692.ctex"]
 
 [params]
 

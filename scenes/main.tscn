@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://c5udqgnysu44o" path="res://scenes/tile_empty.tscn" id="10_isnq1"]
 [ext_resource type="PackedScene" uid="uid://bdh0cqv4kt8t8" path="res://scenes/enemy_01.tscn" id="11_qo57y"]
 [ext_resource type="PackedScene" uid="uid://1b40l6h76su0" path="res://scenes/activity_button.tscn" id="12_33i1u"]
+[ext_resource type="Texture2D" uid="uid://bvp8wfy4lgoc8" path="res://images/tower_Cannon.png" id="13_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://bw7qjsw1xnlvj" path="res://scenes/turret_1.tscn" id="14_8uhva"]
 
 [sub_resource type="Environment" id="Environment_wmip2"]
@@ -23,9 +24,6 @@ glow_intensity = 1.83
 glow_strength = 1.5
 adjustment_enabled = true
 adjustment_contrast = 1.25
-
-[sub_resource type="Resource" id="Resource_trceg"]
-metadata/__load_path__ = "res://images/tower_Cannon.jpg"
 
 [node name="main" type="Node3D"]
 script = ExtResource("1_v46vx")
@@ -72,5 +70,5 @@ offset_right = 48.0
 offset_bottom = 116.0
 grow_horizontal = 2
 grow_vertical = 0
-activity_button_icon = SubResource("Resource_trceg")
+activity_button_icon = ExtResource("13_a8y0u")
 activity_draggable = ExtResource("14_8uhva")
