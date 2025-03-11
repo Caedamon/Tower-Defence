@@ -30776,20 +30776,20 @@ bones/49/position = Vector3(-0.513182, 0.839757, 0.11844)
 bones/49/rotation = Quaternion(0.669631, -0.442474, -0.551558, 0.227145)
 
 [node name="Rectangle_Shield" parent="Rig/Skeleton3D" index="0"]
-transform = Transform3D(-0.34202, 1.00211e-06, 0.939692, 0.801861, 0.521382, 0.291853, -0.489938, 0.853323, -0.178324, 0.686508, 0.839349, 0.230581)
+transform = Transform3D(-0.342019, 3.01376e-06, 0.939692, 0.801862, 0.521381, 0.291852, -0.489937, 0.853323, -0.178325, 0.686508, 0.839349, 0.230581)
 
 [node name="1H_Sword" parent="Rig/Skeleton3D" index="1"]
-transform = Transform3D(0.342019, -1.58153e-08, 0.939692, 0.80186, 0.521384, -0.291853, -0.489941, 0.853322, 0.178324, -0.552348, 0.80652, 0.249324)
+transform = Transform3D(0.342018, -2.69135e-07, 0.939692, 0.801861, 0.521382, -0.291852, -0.489939, 0.853323, 0.178323, -0.552347, 0.80652, 0.249324)
 
 [node name="Knight_Helmet" parent="Rig/Skeleton3D" index="2"]
-transform = Transform3D(0.999948, -0.000710912, 0.0101667, 0.00314932, 0.970294, -0.241906, -0.0096927, 0.241925, 0.970246, 0.0318119, 1.22959, 0.309252)
+transform = Transform3D(0.999948, -0.000710919, 0.0101675, 0.00314955, 0.970295, -0.241906, -0.0096935, 0.241925, 0.970247, 0.031812, 1.22959, 0.309253)
 
 [node name="Knight_Cape" parent="Rig/Skeleton3D" index="3"]
-transform = Transform3D(0.965926, 0.049385, 0.254064, 0.0799795, 0.876629, -0.474474, -0.246152, 0.478626, 0.842809, 0.0305323, 1.23198, 0.303209)
+transform = Transform3D(0.965926, 0.0493852, 0.254064, 0.0799796, 0.876628, -0.474474, -0.246152, 0.478627, 0.842808, 0.0305324, 1.23198, 0.303209)
 
 [node name="AnimationPlayer" parent="." index="1"]
 libraries = {
-"": SubResource("AnimationLibrary_40uco"),
-"knight": SubResource("AnimationLibrary_jphhu")
+&"": SubResource("AnimationLibrary_40uco"),
+&"knight": SubResource("AnimationLibrary_jphhu")
 }
 autoplay = "Running_A"

@@ -9,4 +9,3 @@ class_name PathGeneratorConfig
 @export var add_loops:bool = false
 @export var min_loops = 3
 @export var max_loops = 5
-

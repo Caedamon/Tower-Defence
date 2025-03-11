@@ -107,7 +107,7 @@ transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_d8fh7")
+&"": SubResource("AnimationLibrary_d8fh7")
 }
 
 [connection signal="state_entered" from="EnemyStateChart/CompoundState/Spawning" to="." method="_on_spawning_state_entered"]
