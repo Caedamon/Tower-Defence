@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bynac0hhi7qsd" path="res://scenes/catapult_2.tscn" id="7_uccmc"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_syuvx"]
-size = Vector3(0.380127, 0.338867, 0.565674)
+size = Vector3(0.380127, 0.391968, 0.621216)
 
 [sub_resource type="Animation" id="Animation_yacee"]
 length = 0.001
@@ -137,7 +137,7 @@ collision_layer = 2
 collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Path3D/PathFollow3D/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 0.999965, 0, 0, 0, 0.999965, 0.0057373, 0.102059, 0.0467519)
+transform = Transform3D(1, 0, 0, 0, 0.999994, 0, 0, 0, 0.999994, 0, 0.0265503, 0.027771)
 shape = SubResource("BoxShape3D_syuvx")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
