@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://bw7qjsw1xnlvj"]
+[gd_scene load_steps=9 format=3 uid="uid://bw7qjsw1xnlvj"]
 
 [ext_resource type="Script" uid="uid://cwxqbigutbxve" path="res://scripts/turret_1.gd" id="1_3ec1f"]
+[ext_resource type="PackedScene" uid="uid://x1dx4p5h24ln" path="res://scenes/cannonball.tscn" id="2_8i7i3"]
 [ext_resource type="PackedScene" uid="uid://bpc3r38b5nn03" path="res://scenes/building_tower_cannon_red_2.tscn" id="2_yuu3w"]
 [ext_resource type="Script" uid="uid://1onom427w75x" path="res://addons/godot_state_charts/state_chart.gd" id="3_ued8d"]
 [ext_resource type="Script" uid="uid://bh5mwh2bdpykw" path="res://addons/godot_state_charts/compound_state.gd" id="4_8i7i3"]
@@ -12,9 +13,13 @@ radius = 3.0
 
 [node name="Turret1" type="Node3D"]
 script = ExtResource("1_3ec1f")
+projectile_type = ExtResource("2_8i7i3")
 
 [node name="building_tower_cannon_red" parent="." instance=ExtResource("2_yuu3w")]
 transform = Transform3D(-0.6, 0, -5.24537e-08, 0, 0.6, 0, 5.24537e-08, 0, -0.6, 0, 0, 0)
+
+[node name="projectile_spawn" type="Node3D" parent="building_tower_cannon_red"]
+transform = Transform3D(1, 0, -5.68434e-14, 0, 1, 0, 5.68434e-14, 0, 1, -5.03128e-08, 1.88302, 0.575511)
 
 [node name="PatrolZone" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -48,8 +53,18 @@ script = ExtResource("6_byhn3")
 to = NodePath("../../Attacking")
 event = &"to_attacking_state"
 
+[node name="Patrolling" type="Node" parent="StateChart/CompoundState/Acquiring"]
+script = ExtResource("6_byhn3")
+to = NodePath("../../Patrolling")
+event = &"to_patrolling_state"
+
 [node name="Attacking" type="Node" parent="StateChart/CompoundState"]
 script = ExtResource("5_p4ku2")
+
+[node name="Patroling" type="Node" parent="StateChart/CompoundState/Attacking"]
+script = ExtResource("6_byhn3")
+to = NodePath("../../Patrolling")
+event = &"to_patrolling_state"
 
 [connection signal="area_entered" from="PatrolZone" to="." method="_on_patrol_zone_area_entered"]
 [connection signal="area_exited" from="PatrolZone" to="." method="_on_patrol_zone_area_exited"]

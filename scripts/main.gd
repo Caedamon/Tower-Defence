@@ -22,7 +22,7 @@ func _ready():
 
 # Spawns a wave of enemies with a delay between each spawn
 func _spawn_wave():    
-	for i in range(2):
+	for i in range(2): #Number here decides how many enemies spawn.
 		await get_tree().create_timer(2.275).timeout
 		var enemy2:Node3D = enemy.instantiate()
 		add_child(enemy2)
