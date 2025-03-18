@@ -37,7 +37,6 @@ func _on_travelling_state_processing(delta):
 	var distance_travelled_on_screen:float = clamp(distance_travelled, 0, PathGenInstance.get_path_route().size()-1)
 	$Path3D/PathFollow3D.progress = distance_travelled_on_screen
 
-	# If the enemy reaches the end of the path, transition to the damaging state
 	if distance_travelled > PathGenInstance.get_path_route().size()-1:
 		$EnemyStateChart.send_event("to_damaging_state")
 
@@ -67,14 +66,29 @@ func path_route_to_curve_3d() -> Curve3D:
 		c3d.add_point(Vector3(element.x, 0.25, element.y))
 	return c3d
 
+#func _on_area_3d_area_entered(area):
+	#print("Enemy hit by:", area.name)
+	#if area is Projectile:
+		#print("Applying damage:", area.damage)
+		#enemy_health -= float(area.damage)
+		#print("Remaining health:", enemy_health)
+#
+	#if enemy_health <= 0:
+		#print("Enemy defeated!")
+		#await get_tree().create_timer(0.2).timeout
+		#queue_free()
 func _on_area_3d_area_entered(area):
-	print("Enemy hit by:", area.name)  # Debugging print
+	# Prevent damage to already defeated enemies
+	if enemy_health <= 0:
+		print("Enemy already defeated! Ignoring further hits.")
+		return  # Stops further processing
+
+	print("Enemy hit by:", area.name)
 	if area is Projectile:
 		print("Applying damage:", area.damage)
-		enemy_health -= float(area.damage)
+		enemy_health -= area.damage
 		print("Remaining health:", enemy_health)
 
 	if enemy_health <= 0:
 		print("Enemy defeated!")
-		await get_tree().create_timer(0.2).timeout  # Small delay (0.2 seconds)
 		queue_free()

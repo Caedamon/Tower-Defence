@@ -96,15 +96,6 @@ func _on_attacking_state_physics_processing(delta):
 		print("Enemy disappeared!")
 		$StateChart.send_event("to_patrolling_state")
 
-#func _maybe_fire(): <--- original code, keeping "incase new is wrong" xD
-	#if Time.get_ticks_msec() > (last_fire_time+fire_rate_ms):
-		#print("FIRE!!")
-		#var projectile:Projectile = projectile_type.instantiate()
-		#projectile.starting_position = $building_tower_cannon_red/building_tower_cannon_red/cannon_turret_red/cannon_red/projectile_spawn.global_position
-		#projectile.target = current_enemy
-		#add_child(projectile)
-		#last_fire_time = Time.get_ticks_msec()
-
 # Fires a projectile if enough time has passed.
 func _maybe_fire(): # eeeh fugg it, im keeping the name.
 	if Time.get_ticks_msec() > (last_fire_time + fire_rate_ms):
