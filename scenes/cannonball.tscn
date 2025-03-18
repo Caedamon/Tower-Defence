@@ -7,6 +7,8 @@
 radius = 0.0831182
 
 [node name="Cannonball" type="Area3D"]
+collision_layer = 4
+collision_mask = 2
 script = ExtResource("1_402uy")
 
 [node name="Cannonball" parent="." instance=ExtResource("1_77qtm")]

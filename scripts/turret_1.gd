@@ -31,24 +31,18 @@ func _ready():
 
 # Triggered when an enemy enters the patrol zone.
 # Adds the enemy to the list of detected targets.
-func _on_patrol_zone_area_entered(area: Area3D):
-	if area and area.get_parent():
-		var enemy = area.get_parent()
-		print(enemy, " entered")
-		if current_enemy == null:
-			current_enemy = enemy
-		enemies_in_range.append(enemy)
+func _on_patrol_zone_area_entered(area):
+	# print(area, " entered")
+	if current_enemy == null:
+		current_enemy = area
+	enemies_in_range.append(area)
+	# print(enemies_in_range.size())
 
 # Triggered when an enemy exits the patrol zone.
 # Removes the enemy from the list and updates the current target if needed.
-func _on_patrol_zone_area_exited(area: Area3D):
-	if area and area.get_parent():
-		var enemy = area.get_parent()
-		print(enemy, " exited")
-		enemies_in_range.erase(enemy)
-
-		if current_enemy == enemy:
-			current_enemy = enemies_in_range.back() if enemies_in_range.size() > 0 else null
+func _on_patrol_zone_area_exited(area):
+	# print(area, " exited")
+	enemies_in_range.erase(area)
 
 # Enables or disables patrolling behavior.
 func set_patrolling(patrolling: bool):
@@ -68,7 +62,7 @@ func rotate_towards_target(rtarget, delta):
 	acquire_slerp_progress = min(acquire_slerp_progress + delta, 1.0) # Speed at which the turret locks onto the target
 	if acquire_slerp_progress >= 1.0:
 		$StateChart.send_event("to_attacking_state")
-
+		
 # Runs during the "Patrolling" state.
 # Switches to "Acquiring" if enemies are detected.
 func _on_patrolling_state_processing(_delta):

@@ -5,7 +5,7 @@ var target: Node3D
 var direction: Vector3 = Vector3.ZERO
 
 @export var speed: float = 10  # Adjust speed for testing
-@export var damage: int = 20
+@export var damage: int = 80 # Adjust damage as needed
 
 # Called when the projectile enters the scene
 func _ready():

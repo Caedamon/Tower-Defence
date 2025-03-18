@@ -7,7 +7,6 @@ extends Node3D
 @export var tile_crossroads:PackedScene
 @export var tile_enemy:PackedScene
 @export var tile_empty:Array[PackedScene]
-
 @export var enemy:PackedScene
 
 # Raycast settings

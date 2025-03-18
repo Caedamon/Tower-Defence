@@ -1,17 +1,17 @@
 extends Node3D
+class_name BasicEnemy
+
+var attackable:bool = false
+var distance_travelled:float = 0
+var path_3d:Path3D
+var path_follow_3d:PathFollow3D
+var enemy_health: int
 
 @export var enemy_settings:EnemySettings
 
-# Enemy state variables
-var attackable:bool = false
-var distance_travelled:float = 0
-
-# Path navigation references
-var path_3d:Path3D
-var path_follow_3d:PathFollow3D
-
 # Initializes the enemy's path
 func _ready():
+	enemy_health = enemy_settings.health
 	$Path3D.curve = path_route_to_curve_3d()
 	$Path3D/PathFollow3D.progress = 0
 
@@ -58,8 +58,13 @@ func _on_dying_state_entered():
 # Converts the generated path route into a Curve3D for movement
 func path_route_to_curve_3d() -> Curve3D:
 	var c3d:Curve3D = Curve3D.new()
-
 	for element in PathGenInstance.get_path_route():
 		c3d.add_point(Vector3(element.x, 0.25, element.y))
-
 	return c3d
+
+func _on_area_3d_area_entered(area: Area3D):
+	if area is Projectile:
+		enemy_health -= area.damage
+
+	if enemy_health <= 0:
+		queue_free()
