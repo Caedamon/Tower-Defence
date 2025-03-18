@@ -5,13 +5,18 @@ var attackable:bool = false
 var distance_travelled:float = 0
 var path_3d:Path3D
 var path_follow_3d:PathFollow3D
-var enemy_health: int
+var enemy_health: float
 
 @export var enemy_settings:EnemySettings
 
 # Initializes the enemy's path
 func _ready():
-	enemy_health = enemy_settings.health
+	add_to_group("enemies")
+	if enemy_settings != null:
+		enemy_health = enemy_settings.health
+	else:
+		print("ERROR: enemy_settings is NULL! Using default health.")
+		enemy_health = 100  # Default value (adjust as needed)
 	$Path3D.curve = path_route_to_curve_3d()
 	$Path3D/PathFollow3D.progress = 0
 
@@ -62,9 +67,14 @@ func path_route_to_curve_3d() -> Curve3D:
 		c3d.add_point(Vector3(element.x, 0.25, element.y))
 	return c3d
 
-func _on_area_3d_area_entered(area: Area3D):
+func _on_area_3d_area_entered(area):
+	print("Enemy hit by:", area.name)  # Debugging print
 	if area is Projectile:
-		enemy_health -= area.damage
+		print("Applying damage:", area.damage)
+		enemy_health -= float(area.damage)
+		print("Remaining health:", enemy_health)
 
 	if enemy_health <= 0:
+		print("Enemy defeated!")
+		await get_tree().create_timer(0.2).timeout  # Small delay (0.2 seconds)
 		queue_free()

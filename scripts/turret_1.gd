@@ -11,8 +11,8 @@ var projectile_spawn: Node3D
 @export var fire_rate_ms:int = 1000
 @export var projectile_type:PackedScene
 
-#Called when the node enters the scene.
-#Finds and assigns the turret node for rotation.
+# Called when the node enters the scene.
+# Finds and assigns the turret node for rotation.
 func _ready():
 	var turret_path = "building_tower_cannon_red/building_tower_cannon_red/cannon_turret_red"
 	if has_node(turret_path):
@@ -20,8 +20,7 @@ func _ready():
 		print("Found turret node: ", turret.name)
 	else:
 		print("ERROR: Could not find turret node! Check if the scene is instanced correctly.")
-	
-	# Find the projectile spawn point inside cannon_red
+
 	var spawn_path = "building_tower_cannon_red/projectile_spawn"
 	if has_node(spawn_path):
 		projectile_spawn = get_node(spawn_path)
@@ -32,16 +31,16 @@ func _ready():
 # Triggered when an enemy enters the patrol zone.
 # Adds the enemy to the list of detected targets.
 func _on_patrol_zone_area_entered(area):
-	# print(area, " entered")
+	print(area, " entered")
 	if current_enemy == null:
 		current_enemy = area
 	enemies_in_range.append(area)
-	# print(enemies_in_range.size())
+	print(enemies_in_range.size())
 
 # Triggered when an enemy exits the patrol zone.
 # Removes the enemy from the list and updates the current target if needed.
 func _on_patrol_zone_area_exited(area):
-	# print(area, " exited")
+	print(area, " exited")
 	enemies_in_range.erase(area)
 
 # Enables or disables patrolling behavior.
@@ -54,20 +53,20 @@ func rotate_towards_target(rtarget, delta):
 		print("ERROR: Turret node is NULL! Check the path in _ready().")
 		return
 
-	var target_vector = turret.global_position.direction_to(
-		Vector3(rtarget.global_position.x, global_position.y, rtarget.global_position.z)
-	)
+	var target_vector = turret.global_position.direction_to(Vector3(rtarget.global_position.x, global_position.y, rtarget.global_position.z))
 	var target_basis: Basis = Basis.looking_at(target_vector)
 	turret.basis = turret.basis.slerp(target_basis, acquire_slerp_progress)
 	acquire_slerp_progress = min(acquire_slerp_progress + delta, 1.0) # Speed at which the turret locks onto the target
+
 	if acquire_slerp_progress >= 1.0:
 		$StateChart.send_event("to_attacking_state")
-		
+
 # Runs during the "Patrolling" state.
 # Switches to "Acquiring" if enemies are detected.
 func _on_patrolling_state_processing(_delta):
 	if enemies_in_range.size() > 0:
-		current_enemy = enemies_in_range.back()
+		enemies_in_range.sort_custom(func(a, b): return a.global_position.distance_to(global_position) < b.global_position.distance_to(global_position))
+		current_enemy = enemies_in_range[0]
 		$StateChart.send_event("to_acquiring_state")
 	else:
 		current_enemy = null
@@ -106,33 +105,28 @@ func _on_attacking_state_physics_processing(delta):
 		#add_child(projectile)
 		#last_fire_time = Time.get_ticks_msec()
 
-func _maybe_fire():
+# Fires a projectile if enough time has passed.
+func _maybe_fire(): # eeeh fugg it, im keeping the name.
 	if Time.get_ticks_msec() > (last_fire_time + fire_rate_ms):
-		print("FIRE!!")
-		var projectile = projectile_type.instantiate()
-		if not projectile:
-			print("ERROR: Could not instantiate projectile!")
+		if projectile_spawn == null:
+			print("ERROR: projectile_spawn is NULL! Check _ready().")
 			return
-		if projectile_spawn == null or not projectile_spawn.is_inside_tree():
-			print("ERROR: projectile_spawn is NULL or not inside tree! Check _ready().")
-			return
-		if current_enemy == null or not current_enemy.is_inside_tree():
-			print("ERROR: current_enemy is NULL or not inside tree! Cannot fire.")
+		if current_enemy == null or not is_instance_valid(current_enemy):
+			print("ERROR: current_enemy is NULL or deleted! Cannot fire.")
 			return
 
-		get_tree().current_scene.add_child(projectile)
-		projectile.global_position = projectile_spawn.global_position
-		print("Projectile spawned at:", projectile.global_position)
-		if projectile.has_method("set_direction"):
-			projectile.set_direction((current_enemy.global_position - projectile.global_position).normalized())
-		else:
-			print("ERROR: Projectile is missing set_direction() method!")
-		if projectile.has_method("set_target"):
-			projectile.set_target(current_enemy)
+		print("Fire!!")
+		var projectile:Projectile = projectile_type.instantiate()
+		projectile.starting_position = projectile_spawn.global_position
+		projectile.target = current_enemy
+		add_child(projectile)
 		last_fire_time = Time.get_ticks_msec()
 
 # Called when entering the "Attacking" state.
 # Fire projectiles.
 func _on_attacking_state_entered():
-	print("Target acquired")
+	if current_enemy != null:
+		print("Target acquired:", current_enemy.name)
+	else:
+		print("ERROR: No enemy targeted!")
 	last_fire_time = Time.get_ticks_msec()

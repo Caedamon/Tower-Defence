@@ -1,12 +1,19 @@
-[gd_scene load_steps=13 format=3 uid="uid://bdh0cqv4kt8t8"]
+[gd_scene load_steps=14 format=3 uid="uid://bdh0cqv4kt8t8"]
 
 [ext_resource type="Script" uid="uid://0fd45svuoep0" path="res://scripts/basic_enemy.gd" id="1_x18ab"]
 [ext_resource type="Script" uid="uid://1onom427w75x" path="res://addons/godot_state_charts/state_chart.gd" id="2_5wlrk"]
-[ext_resource type="Resource" uid="uid://b6pb1lrpq3m4j" path="res://resources/basic_enemy_settings.res" id="2_ariuf"]
+[ext_resource type="Script" uid="uid://rg2rger6sybf" path="res://scripts/enemy_settings.gd" id="2_syuvx"]
 [ext_resource type="Script" uid="uid://bh5mwh2bdpykw" path="res://addons/godot_state_charts/compound_state.gd" id="3_ah54x"]
 [ext_resource type="Script" uid="uid://dh1uwqry00tmb" path="res://addons/godot_state_charts/atomic_state.gd" id="4_oaeau"]
 [ext_resource type="Script" uid="uid://dkafc37182inw" path="res://addons/godot_state_charts/transition.gd" id="5_2ibju"]
 [ext_resource type="PackedScene" uid="uid://bynac0hhi7qsd" path="res://scenes/catapult_2.tscn" id="7_uccmc"]
+
+[sub_resource type="Resource" id="Resource_syuvx"]
+script = ExtResource("2_syuvx")
+speed = 1.0
+health = 100.0
+damage = 5.0
+metadata/_custom_type_script = "uid://rg2rger6sybf"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_syuvx"]
 size = Vector3(0.380127, 0.391968, 0.621216)
@@ -65,9 +72,9 @@ _data = {
 &"spawn": SubResource("Animation_62le1")
 }
 
-[node name="Enemy01" type="Node3D"]
+[node name="Enemy01" type="Node3D" groups=["enemies"]]
 script = ExtResource("1_x18ab")
-enemy_settings = ExtResource("2_ariuf")
+enemy_settings = SubResource("Resource_syuvx")
 
 [node name="EnemyStateChart" type="Node" parent="."]
 script = ExtResource("2_5wlrk")
