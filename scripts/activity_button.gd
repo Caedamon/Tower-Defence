@@ -36,19 +36,21 @@ func _physics_process(_delta):
 		if rayResult.size() > 0:
 			var co:CollisionObject3D = rayResult.get("collider")
 
-			if co.get_groups()[0] == "grid_empty":
+			if co.get_groups().size() > 0 and co.get_groups()[0] == "grid_empty":
 				# Valid placement location
 				_draggable.visible = true
 				_is_valid_location = true
 				_last_valid_location = Vector3(co.global_position.x, 0.2, co.global_position.z)
 				_draggable.global_position = _last_valid_location
 				clear_child_mesh_error(_draggable)
+
 			else:
 				# Invalid placement location
 				_draggable.visible = true
 				_draggable.global_position = Vector3(co.global_position.x, 0.2, co.global_position.z)
 				_is_valid_location = false
 				set_child_mesh_error(_draggable)
+
 		else:
 			_draggable.visible = false
 

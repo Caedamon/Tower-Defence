@@ -2,6 +2,7 @@ extends Node3D
 
 var enemies_in_range: Array[Node3D]
 var current_enemy: Node3D = null
+var current_enemy_class:Enemy = null
 var current_enemy_targetted: bool = false
 var acquire_slerp_progress: float = 0
 var last_fire_time:int
@@ -31,11 +32,11 @@ func _ready():
 # Triggered when an enemy enters the patrol zone.
 # Adds the enemy to the list of detected targets.
 func _on_patrol_zone_area_entered(area):
-	print(area, " entered")
+	#print(area, " entered")
 	if current_enemy == null:
 		current_enemy = area
 	enemies_in_range.append(area)
-	print(enemies_in_range.size())
+	#print(enemies_in_range.size())
 
 # Triggered when an enemy exits the patrol zone.
 # Removes the enemy from the list and updates the current target if needed.
@@ -50,7 +51,7 @@ func set_patrolling(patrolling: bool):
 # Rotates the turret smoothly toward the target enemy.
 func rotate_towards_target(rtarget, delta):
 	if turret == null:
-		print("ERROR: Turret node is NULL! Check the path in _ready().")
+		#print("ERROR: Turret node is NULL! Check the path in _ready().")
 		return
 
 	var target_vector = turret.global_position.direction_to(Vector3(rtarget.global_position.x, global_position.y, rtarget.global_position.z))
@@ -61,15 +62,30 @@ func rotate_towards_target(rtarget, delta):
 	if acquire_slerp_progress >= 1.0:
 		$StateChart.send_event("to_attacking_state")
 
+func _find_enemy_parent(n:Node):
+	if n is Enemy:
+		return n
+	elif n.get_parent() != null:
+		return _find_enemy_parent(n.get_parent())
+	else:
+		return null
+		
+
 # Runs during the "Patrolling" state.
 # Switches to "Acquiring" if enemies are detected.
 func _on_patrolling_state_processing(_delta):
 	if enemies_in_range.size() > 0:
 		enemies_in_range.sort_custom(func(a, b): return a.global_position.distance_to(global_position) < b.global_position.distance_to(global_position))
 		current_enemy = enemies_in_range[0]
+		current_enemy_class = _find_enemy_parent(current_enemy)
+		current_enemy_class.enemy_finished.connect(_remove_current_enemy)
 		$StateChart.send_event("to_acquiring_state")
 	else:
 		current_enemy = null
+
+func _remove_current_enemy():
+	print("Enemy Finished!")
+	enemies_in_range.erase(current_enemy)
 
 # Called when entering the "Acquiring" state.
 # Resets the turret's targeting progress.
@@ -83,7 +99,7 @@ func _on_acquiring_state_physics_processing(delta):
 	if current_enemy != null and enemies_in_range.has(current_enemy):
 		rotate_towards_target(current_enemy, delta)
 	else:
-		print("Enemy disappeared while acquiring!")
+		#print("Enemy disappeared while acquiring!")
 		$StateChart.send_event("to_patrolling_state")
 
 # Runs during the "Attacking" state.
@@ -93,17 +109,17 @@ func _on_attacking_state_physics_processing(delta):
 		rotate_towards_target(current_enemy, delta)
 		_maybe_fire() #provisional name for now
 	else:
-		print("Enemy disappeared!")
+		#print("Enemy disappeared!")
 		$StateChart.send_event("to_patrolling_state")
 
 # Fires a projectile if enough time has passed.
 func _maybe_fire(): # eeeh fugg it, im keeping the name.
 	if Time.get_ticks_msec() > (last_fire_time + fire_rate_ms):
 		if projectile_spawn == null:
-			print("ERROR: projectile_spawn is NULL! Check _ready().")
+			#print("ERROR: projectile_spawn is NULL! Check _ready().")
 			return
 		if current_enemy == null or not is_instance_valid(current_enemy):
-			print("ERROR: current_enemy is NULL or deleted! Cannot fire.")
+			#print("ERROR: current_enemy is NULL or deleted! Cannot fire.")
 			return
 
 		print("Fire!!")
